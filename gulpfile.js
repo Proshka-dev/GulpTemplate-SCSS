@@ -10,7 +10,9 @@ import { plugins } from "./gulp/config/plugins.js";
 global.app = {
     path: path,
     gulp: gulp,
-    plugins: plugins
+    plugins: plugins,
+    isBuild: process.argv.includes('--build'),
+    isDev: !process.argv.includes('--build')
 }
 
 
@@ -38,6 +40,11 @@ const mainTasks = gulp.parallel(copy, html, scss, js, images);
 // Построение сценариев выполнения задач
 // series выполняет задачи последовательно
 const dev = gulp.series(reset, mainTasks, watcher);
+const build = gulp.series(reset, mainTasks);
+
+// Экспорт сценариев
+export { dev }
+export { build }
 
 // Выпролнение сценария по умолчанию
 gulp.task('default', dev);

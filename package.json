@@ -4,6 +4,8 @@
   "main": "gulpfile.js",
   "type": "module",
   "scripts": {
+    "dev": "gulp",
+    "build": "gulp build --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Proshka",

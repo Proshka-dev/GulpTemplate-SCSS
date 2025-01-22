@@ -9,7 +9,7 @@ import groupCssMediaQueries from 'gulp-group-css-media-queries'; // Групир
 const sass = gulpSass(dartSass);
 
 export const scss = () => {
-    return app.gulp.src(app.path.src.scss, { sourcemaps: true })
+    return app.gulp.src(app.path.src.scss, { sourcemaps: app.isDev }) // sourcemaps только в режиме Dev
         //обработка ошибок
         .pipe(app.plugins.plumber(
             app.plugins.notify.onError({
@@ -23,15 +23,22 @@ export const scss = () => {
         .pipe(sass({
             outputStyle: 'expanded'
         }))
-        // Группируем медиа запросы
-        .pipe(groupCssMediaQueries())
-        // Автопрефиксер
-        .pipe(autoprefixer(
-            {
-                grid: true,
-                overrideBrowserslist: ["last 3 versions"],
-                cascade: true
-            }
+        // Группируем медиа запросы ***if isBuild***
+        .pipe(app.plugins.if(
+            app.isBuild,
+            groupCssMediaQueries()
+        ))
+
+        // Автопрефиксер ***if isBuild***
+        .pipe(app.plugins.if(
+            app.isBuild,
+            autoprefixer(
+                {
+                    grid: true,
+                    overrideBrowserslist: ["last 3 versions"],
+                    cascade: true
+                }
+            )
         ))
 
         // Закомментировать, если не нужен не сжатый дубль файла стилей

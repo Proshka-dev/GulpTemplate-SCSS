@@ -22,6 +22,7 @@ import { reset } from "./gulp/tasks/reset.js";
 import { html } from "./gulp/tasks/html.js";
 import { scss } from "./gulp/tasks/scss.js";
 import { js } from "./gulp/tasks/js.js";
+import { tstask } from "./gulp/tasks/ts.js";
 import { images } from "./gulp/tasks/images.js";
 
 // Наблюдатель за изменениями в файлах
@@ -32,6 +33,7 @@ function watcher() {
     gulp.watch(path.watch.html, html);
     gulp.watch(path.watch.scss, scss);
     gulp.watch(path.watch.js, js);
+    //gulp.watch(path.watch.ts, tstask);
     gulp.watch(path.watch.images, images);
 }
 
